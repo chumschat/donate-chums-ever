@@ -457,7 +457,6 @@
         }
       },
       async mounted() {
-        console.log(window, '---window')
         await new Promise((res) => setTimeout(res, 500));
         this.pageLoading = false
       },
@@ -564,18 +563,18 @@
           this.everProvider = ever;
         },
         async initPermission() {
-          const ever = new EverscaleProvider.ProviderRpcClient();
-          const hasProvider = await ever.hasProvider();
+          try {
+            const ever = new EverscaleProvider.ProviderRpcClient();
+            await ever.ensureInitialized();
 
-          if (!(await ever.hasProvider())) {
-            throw new Error('Extension is not installed');
+            const { accountInteraction } = await ever.requestPermissions({
+              permissions: ['basic', 'accountInteraction'],
+            });
+
+            this.permissionData = accountInteraction;
+          } catch(e) {
+            console.error(e);
           }
-          await ever.ensureInitialized();
-          const { accountInteraction } = await ever.requestPermissions({
-            permissions: ['basic', 'accountInteraction'],
-          });
-
-          this.permissionData = accountInteraction
         },
       }
     }).mount('#app')
