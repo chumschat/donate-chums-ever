@@ -317,11 +317,6 @@
 
 <body>
   <div id="app">
-    <Transition>
-      <div class="app--page-loader" v-if="pageLoading">
-        <span class="loader"></span>
-      </div>
-    </Transition>
     <section class="section">
       <div class="container">
         <div class="app__block">
@@ -458,7 +453,7 @@
       },
       async mounted() {
         await new Promise((res) => setTimeout(res, 500));
-        this.pageLoading = false
+        this.pageLoading = false;
       },
       watch: {
         async permissionData(val) {
