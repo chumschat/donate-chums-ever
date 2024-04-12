@@ -583,10 +583,13 @@
               permissions: ['basic', 'accountInteraction'],
             });
 
+            alert(JSON.stringify(accountInteraction));
             this.connectWallet(accountInteraction);
             this.permissionData = accountInteraction;
+            alert("CONNECTED");
           } catch(e) {
             console.error(e);
+            alert("ERROR");
           }
         },
       }
